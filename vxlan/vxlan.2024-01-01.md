@@ -14,6 +14,7 @@ VXLAN技术(Virtual Extensible Local Area Network)是一种虚拟化隧道通信
 ![VXLAN抓包](https://cizixs-blog.oss-cn-beijing.aliyuncs.com/006tKfTcgy1fjyb6b5ybdj30x20lq11q.jpg)
 可以看到VXLAN报文的Payload就是以太网帧。
 
+
 ### VXLAN作为容器跨节点通信解决方案之一
 
 在kubernetes生态下，容器运行时只负责解决本节点上容器的通信问题，例如docker，通过虚拟网桥和veth pair技术进行实现的；而对于不同节点上的容器如何进行通信kubernetes则是通过CNI插件实现的，很多CNI插件都是支持VXLAN模式跨节点容器通信的方式。下面介绍一下通过VXLAN怎么实现跨节点容器通信，首先网络拓扑图如下:
@@ -33,7 +34,7 @@ VXLAN技术(Virtual Extensible Local Area Network)是一种虚拟化隧道通信
 
 其中id就是VNI；UDP目的端口号固定为4789，IANA（国际互联网组织）分配的端口是 4789；remote表示远端的VTEP地址，local表示自身地址
 
-1. 将vxlan0加入docker0
+2. 将vxlan0加入docker0
   
   ```sh
     brctl addif docker0 vxlan0
@@ -79,8 +80,8 @@ VNI用来标识一个VXLAN网络，这是提前约定好的。
   ```
 
 通信抓包如下：
-![](./tcpdump2-1.png)
-![](./tcpdump2-2.png)
+![](tcpdump2-1.png)
+![](tcpdump2-2.png)
 
 可以看到Host1将VXLAN报文发往239.1.1.1这一组播地址上，Host2也是这个组播地址收到包后对其进行回复。多播实现很简单，不需要中心化的控制，但是不是所有的网络都支持多播。
 
