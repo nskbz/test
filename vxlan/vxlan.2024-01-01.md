@@ -19,7 +19,7 @@ VXLAN技术(Virtual Extensible Local Area Network)是一种虚拟化隧道通信
 
 在kubernetes生态下，容器运行时只负责解决本节点上容器的通信问题，例如docker，通过虚拟网桥和veth pair技术进行实现的；而对于不同节点上的容器如何进行通信kubernetes则是通过CNI插件实现的，很多CNI插件都是支持VXLAN模式跨节点容器通信的方式。下面介绍一下通过VXLAN怎么实现跨节点容器通信，首先网络拓扑图如下:
 
-![](./Vxlan.svg)
+![](Vxlan.svg)
 
 1. 创建Vxlan虚拟网卡
   
@@ -43,7 +43,7 @@ VXLAN技术(Virtual Extensible Local Area Network)是一种虚拟化隧道通信
 
 同样对Host2进行如上操作，就可以发现容器可以跨节点通信了，如图所示:
 
-![](./tcpdump1.png)
+![](tcpdump1.png)
 
 通过上面的配置,在Host1上指定对端VETP为Host2,Host2上指定对端VETP为Host1,Host1的VXLAN报文全部转发到Host2,Host2的VXLAN报文全部转发到Host1从而实现Oerlay通信。
 
@@ -116,8 +116,8 @@ VNI用来标识一个VXLAN网络，这是提前约定好的。
 这里的00:00:00:00:00:00表示默认表项，如果没有匹配的VETP表项就会将VXLAN报文发向192.168.56.3，当然这里可以有多条默认表项，当没有匹配的VETP表项就会向所有的默认表项发去。
 
 这是添加默认表现后的Host1
-![](./fdb1.png)
+![](fdb1.png)
 
 这是Host1上容器172.16.1.2 ping Host2上容器172.16.1.3后vxlan0学习到的FDB表项，可以发现学习到的目标mac地址与Host2上容器内部的mac地址一样。
-![](./fdb2.png)
-![](./fdb3.png)
+![](fdb2.png)
+![](fdb3.png)
