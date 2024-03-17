@@ -10,9 +10,10 @@ VXLAN技术(Virtual Extensible Local Area Network)是一种虚拟化隧道通信
   VNI是每个VXLAN的标识，有24bit，因此最大值是2^24=16777216。如果一个VNI对应一个租户，那么理论上VXLAN可以支撑千万级别的租户。
 
 * VXLAN的报文格式
-![VXLAN报文](https://image-static.segmentfault.com/199/902/1999028472-5e952ef47057b_fix732)
-![VXLAN抓包](https://cizixs-blog.oss-cn-beijing.aliyuncs.com/006tKfTcgy1fjyb6b5ybdj30x20lq11q.jpg)
-可以看到VXLAN报文的Payload就是以太网帧。
+  ![VXLAN报文](https://image-static.segmentfault.com/199/902/1999028472-5e952ef47057b_fix732)
+  ![VXLAN抓包](https://cizixs-blog.oss-cn-beijing.aliyuncs.com/006tKfTcgy1fjyb6b5ybdj30x20lq11q.jpg)
+
+  可以看到VXLAN报文的Payload就是以太网帧。
 
 
 ### VXLAN作为容器跨节点通信解决方案之一
